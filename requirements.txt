@@ -1,0 +1,13 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+faiss-cpu
+fastapi
+torch
+sentence-transformers
+rank-bm25
+pandas
+scikit-learn
+uvicorn[standard]
+requests
+python-dotenv
+huggingface-hub
+gunicorn

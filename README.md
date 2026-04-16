@@ -1,3 +1,12 @@
+---
+title: Neural Search Engine AI
+emoji: 🧠
+colorFrom: indigo
+colorTo: purple
+sdk: docker
+pinned: false
+---
+
 # Neural Search Engine for Technical Q&A 🧠🔍
 
 A production-ready Semantic & Hybrid Search Engine built with **FastAPI**, **React**, and **FAISS**. This project demonstrates advanced Information Retrieval (IR) techniques and modern Cloud Architecture practices.
@@ -10,7 +19,8 @@ A production-ready Semantic & Hybrid Search Engine built with **FastAPI**, **Rea
 - **AI-Powered Fallback**: If the search engine score falls below a confidence threshold (0.7), the system automatically triggers a **Senior Technical Architect (LLM)** via Hugging Face to generate a real-time solution.
 - **High-Performance Vector Index**: Uses **FAISS** with L2-normalized Inner Product similarity for sub-millisecond search latencies on 384-dimensional question embeddings.
 - **Glassmorphism UI**: A stunning, animated React interface with pastel aesthetics, markdown rendering, and real-time "Copy to Clipboard" functionality.
-- **Cloud-Native Design**: Fully containerized with **Docker** and architected for **AWS App Runner** with CI/CD automation.
+- **Cloud-Native Design**: Optimized for **Hugging Face Spaces** for high-memory AI inference (16GB RAM).
+
 
 ## 🛠️ Tech Stack
 

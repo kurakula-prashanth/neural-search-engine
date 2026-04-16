@@ -1,0 +1,11 @@
+.git
+.gitignore
+frontend/node_modules
+frontend/dist
+backend/__pycache__
+*.pyc
+*.pyo
+venv
+.env
+Technical_Documentation.md
+Deployment_Render_Vercel.md
