@@ -10,13 +10,19 @@ A production-grade **Semantic & Hybrid Search Engine** that bridges the gap betw
 
 ## 🎬 Cinematic Project Overview
 
-<h3>1. Neural Boot Sequence</h3>
-<p>When the application launches, it undergoes a tactical boot-up sequence, initializing AI protocols and establishing the retrieval matrix.</p>
-<img src="https://github.com/user-attachments/assets/1ed52591-ea85-47ac-9dbd-c81f759d84d3" width="700"/>
+### 1. Neural Boot Sequence
+When the application launches, it undergoes a tactical boot-up sequence, initializing AI protocols and establishing the retrieval matrix.
 
-<h3>2. Intelligent Search Dashboard</h3>
-<p>A minimalist, high-impact interface where users can query the neural matrix across three distinct retrieval tiers.</p>
-<img src="https://github.com/user-attachments/assets/cd1a6a9d-de68-4e03-87c3-0d48a4da30b7" width="700"/>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/1ed52591-ea85-47ac-9dbd-c81f759d84d3" width="700"/>
+</p>
+
+### 2. Intelligent Search Dashboard
+A minimalist, high-impact interface where users can query the neural matrix across three distinct retrieval tiers.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cd1a6a9d-de68-4e03-87c3-0d48a4da30b7" width="700"/>
+</p>
 ---
 
 ## 🚀 How it Works
