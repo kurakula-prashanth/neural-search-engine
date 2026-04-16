@@ -90,5 +90,10 @@ app.add_middleware(
 )
 
 # ── Register routes ──────────────────────────────────────────────────────────
+@app.get("/")
+async def root():
+    return {"message": "Neural Search AI Backend is running.", "status": "online"}
+
 app.include_router(search_router)
+
 

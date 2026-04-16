@@ -48,10 +48,11 @@ class SemanticEngine:
         print(f"[SemanticEngine] Encoding {len(questions)} questions...")
         embeddings = self._model.encode(
             questions,
-            show_progress_bar=True,
-            batch_size=128,
-            normalize_embeddings=True,      # L2-normalise → cosine sim via IP
+            show_progress_bar=False,
+            batch_size=32,                  # Smaller batch = lower peak memory
+            normalize_embeddings=True,
         )
+
         embeddings = np.array(embeddings, dtype="float32")
 
         self._index = faiss.IndexFlatIP(EMBEDDING_DIMENSION)

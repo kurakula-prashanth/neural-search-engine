@@ -16,7 +16,8 @@ DATA_PATH = BASE_DIR / "techqa.csv"
 
 
 # ── Model ────────────────────────────────────────────────────────────────────
-EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
+EMBEDDING_MODEL_NAME = "paraphrase-MiniLM-L3-v2"
+
 EMBEDDING_DIMENSION = 384                                     # output dim of MiniLM
 
 # ── Search defaults ──────────────────────────────────────────────────────────
