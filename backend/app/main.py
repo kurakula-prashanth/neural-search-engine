@@ -28,16 +28,16 @@ async def initialize_engines():
     print("=" * 60)
 
     try:
-        # 1 ── Load data
-        df = load_and_preprocess()
+        # 1 ── Load data (Offload to thread)
+        df = await asyncio.to_thread(load_and_preprocess)
 
-        # 2 ── Build BM25 index
+        # 2 ── Build BM25 index (Offload to thread)
         bm25_engine = BM25Engine()
-        bm25_engine.build_index(df)
+        await asyncio.to_thread(bm25_engine.build_index, df)
 
-        # 3 ── Build Semantic index (FAISS + Sentence Transformer)
+        # 3 ── Build Semantic index (Offload to thread)
         semantic_engine = SemanticEngine()
-        semantic_engine.build_index(df)
+        await asyncio.to_thread(semantic_engine.build_index, df)
 
         # 4 ── Create Hybrid engine
         hybrid_engine = HybridEngine(bm25_engine, semantic_engine)
@@ -53,6 +53,7 @@ async def initialize_engines():
         print("=" * 60)
     except Exception as e:
         print(f"CRITICAL ERROR during initialization: {str(e)}")
+
 
 
 @asynccontextmanager
