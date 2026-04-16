@@ -27,8 +27,9 @@ HYBRID_ALPHA = 0.5          # 0 = pure BM25, 1 = pure semantic
 
 # ── LLM Fallback (Hugging Face) ──────────────────────────────────────────────
 HF_API_TOKEN = os.getenv("HF_API_TOKEN", "") # Make sure to set this in your .env file
-HF_MODEL_ID = "HuggingFaceH4/zephyr-7b-beta"
+HF_MODEL_ID = "Qwen/Qwen2.5-7B-Instruct"
 FALLBACK_THRESHOLD = 0.7    # If top hybrid score is below 0.7, trigger LLM
+
 
 # ── Server ───────────────────────────────────────────────────────────────────
 HOST = os.getenv("HOST", "0.0.0.0")
