@@ -8,6 +8,7 @@ On startup the app:
   4. Initialises the Hybrid engine
 """
 
+import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,37 +18,50 @@ from app.data_loader import load_and_preprocess
 from app.engines.bm25_engine import BM25Engine
 from app.engines.semantic_engine import SemanticEngine
 from app.engines.hybrid_engine import HybridEngine
-from app.routes.search import router as search_router, init_routes
+from app.routes.search import router as search_router, init_routes, set_ready
+
+
+async def initialize_engines():
+    """Heavy background task to load AI models and data."""
+    print("=" * 60)
+    print("Background Initialization Started...")
+    print("=" * 60)
+
+    try:
+        # 1 ── Load data
+        df = load_and_preprocess()
+
+        # 2 ── Build BM25 index
+        bm25_engine = BM25Engine()
+        bm25_engine.build_index(df)
+
+        # 3 ── Build Semantic index (FAISS + Sentence Transformer)
+        semantic_engine = SemanticEngine()
+        semantic_engine.build_index(df)
+
+        # 4 ── Create Hybrid engine
+        hybrid_engine = HybridEngine(bm25_engine, semantic_engine)
+
+        # 5 ── Inject into routes
+        init_routes(df, bm25_engine, semantic_engine, hybrid_engine)
+        
+        # 6 ── Mark as ready
+        set_ready(True)
+
+        print("=" * 60)
+        print("All engines initialised — server is ready!")
+        print("=" * 60)
+    except Exception as e:
+        print(f"CRITICAL ERROR during initialization: {str(e)}")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup / shutdown lifecycle."""
-    print("=" * 60)
-    print("Semantic & Hybrid Search Engine — Starting up")
-    print("=" * 60)
-
-    # 1 ── Load data
-    df = load_and_preprocess()
-
-    # 2 ── Build BM25 index
-    bm25_engine = BM25Engine()
-    bm25_engine.build_index(df)
-
-    # 3 ── Build Semantic index (FAISS + Sentence Transformer)
-    semantic_engine = SemanticEngine()
-    semantic_engine.build_index(df)
-
-    # 4 ── Create Hybrid engine
-    hybrid_engine = HybridEngine(bm25_engine, semantic_engine)
-
-    # 5 ── Inject into routes
-    init_routes(df, bm25_engine, semantic_engine, hybrid_engine)
-
-    print("=" * 60)
-    print("All engines initialised — server is ready!")
-    print("=" * 60)
-
+    # Start the heavy engine initialization in the background
+    # This allows the server to open its port IMMEIDATELY
+    asyncio.create_task(initialize_engines())
+    
     yield  # ← app runs here
 
     print("Shutting down…")
@@ -76,3 +90,4 @@ app.add_middleware(
 
 # ── Register routes ──────────────────────────────────────────────────────────
 app.include_router(search_router)
+

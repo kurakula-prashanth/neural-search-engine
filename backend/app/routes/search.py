@@ -32,6 +32,7 @@ _df = None
 _bm25_engine = None
 _semantic_engine = None
 _hybrid_engine = None
+_is_ready = False
 
 
 def init_routes(df, bm25_engine, semantic_engine, hybrid_engine):
@@ -41,6 +42,22 @@ def init_routes(df, bm25_engine, semantic_engine, hybrid_engine):
     _bm25_engine = bm25_engine
     _semantic_engine = semantic_engine
     _hybrid_engine = hybrid_engine
+
+
+def set_ready(ready: bool):
+    """Update system readiness state."""
+    global _is_ready
+    _is_ready = ready
+
+
+def check_readiness():
+    """Raise 503 if system is not yet initialized."""
+    if not _is_ready:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="The Neural Engine is currently initializing AI models. Please try again in 30 seconds."
+        )
+
 
 
 def _results_from_indices(
@@ -76,6 +93,7 @@ async def search_bm25(
     query: str = Query(..., min_length=1, description="Search query"),
     top_k: int = Query(5, ge=1, le=20, description="Number of results"),
 ):
+    check_readiness()
     start = time.perf_counter()
     indices_scores = _bm25_engine.search(query, top_k)
     elapsed = (time.perf_counter() - start) * 1000
@@ -96,6 +114,7 @@ async def search_semantic(
     query: str = Query(..., min_length=1, description="Search query"),
     top_k: int = Query(5, ge=1, le=20, description="Number of results"),
 ):
+    check_readiness()
     start = time.perf_counter()
     indices_scores = _semantic_engine.search(query, top_k)
     elapsed = (time.perf_counter() - start) * 1000
@@ -117,6 +136,7 @@ async def search_hybrid(
     top_k: int = Query(5, ge=1, le=20, description="Number of results"),
     alpha: float = Query(0.5, ge=0.0, le=1.0, description="Semantic weight"),
 ):
+    check_readiness()
     start = time.perf_counter()
     indices_scores = _hybrid_engine.search(query, top_k, alpha)
     elapsed = (time.perf_counter() - start) * 1000
@@ -167,6 +187,7 @@ async def search_compare(
     query: str = Query(..., min_length=1, description="Search query"),
     top_k: int = Query(5, ge=1, le=20, description="Number of results"),
 ):
+    check_readiness()
     """
     Run all three search methods and compare with evaluation metrics.
 
