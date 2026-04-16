@@ -5,6 +5,8 @@ Converts questions into dense vectors, stores them in a FAISS index,
 and retrieves the most similar documents by cosine similarity.
 """
 
+import gc
+import torch
 from typing import List, Tuple
 import numpy as np
 import faiss
@@ -12,6 +14,10 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer
 
 from app.config import EMBEDDING_MODEL_NAME, EMBEDDING_DIMENSION
+
+# Set torch to single-threaded mode to save memory on low-resource environments
+torch.set_num_threads(1)
+
 
 
 class SemanticEngine:
@@ -48,11 +54,15 @@ class SemanticEngine:
         )
         embeddings = np.array(embeddings, dtype="float32")
 
-        # Build FAISS index (Inner Product for cosine similarity on normalised vectors)
         self._index = faiss.IndexFlatIP(EMBEDDING_DIMENSION)
         self._index.add(embeddings)
 
         print(f"[SemanticEngine] FAISS index built with {self._index.ntotal} vectors.")
+        
+        # Clear large temporary embedding arrays from memory
+        del embeddings
+        gc.collect()
+
 
     def search(self, query: str, top_k: int = 5) -> List[Tuple[int, float]]:
         """
@@ -68,14 +78,19 @@ class SemanticEngine:
         if self._model is None or self._index is None:
             raise RuntimeError("Semantic index has not been built yet.")
 
-        # Encode query
-        query_vec = self._model.encode(
-            [query],
-            normalize_embeddings=True,
-        ).astype("float32")
+        # Encode query - use no_grad to save memory
+        with torch.no_grad():
+            query_vec = self._model.encode(
+                [query],
+                normalize_embeddings=True,
+            ).astype("float32")
 
         # Search FAISS
         scores, indices = self._index.search(query_vec, top_k)
+
+        # Immediate cleanup
+        del query_vec
+        gc.collect()
 
         results = []
         for score, idx in zip(scores[0], indices[0]):
@@ -83,3 +98,4 @@ class SemanticEngine:
                 results.append((int(idx), float(score)))
 
         return results
+
