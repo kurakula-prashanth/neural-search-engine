@@ -1,0 +1,14 @@
+faiss-cpu
+fastapi
+sentence-transformers
+rank-bm25
+pandas
+scikit-learn
+uvicorn
+requests
+python-dotenv
+huggingface-hub
+gunicorn
+uvicorn[standard]
+
+
