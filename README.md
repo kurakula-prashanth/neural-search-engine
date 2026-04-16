@@ -17,56 +17,68 @@ A production-grade **Semantic & Hybrid Search Engine** that bridges the gap betw
 
 ---
 
-## 🚀 Vision & Innovation
+## 🎬 Cinematic Project Overview
 
-Conventional search engines fail when technical questions are too nuanced for keywords or too specific for general LLMs. This project solves that by:
-1.  **Direct Retrieval**: Instantly finding exact technical matches in a curated Q&A corpus using **BM25** and **FAISS**.
-2.  **Autonomous Reasoning**: When confidence is low (< 90%), the system triggers a **Senior Technical Architect (LLM)** to generate a deep-dive, multi-paragraph solution in real-time.
+### 1. Neural Boot Sequence
+When the application launches, it undergoes a tactical boot-up sequence, initializing AI protocols and establishing the retrieval matrix.
+![Intro Splash](docs/intro_splash.png)
 
-## 🏗️ Technical Architecture
+### 2. Intelligent Search Dashboard
+A minimalist, high-impact interface where users can query the neural matrix across three distinct retrieval tiers.
+![Search Dashboard](docs/search_dashboard.png)
 
-| Component | Technology | Role |
-| :--- | :--- | :--- |
-| **Frontend** | React (Vite) + Framer Motion | Cinematic 3D Nocturnal UI with hybrid analytics. |
-| **Search API** | FastAPI + Uvicorn | High-performance ASGI backend with async initialization. |
-| **Semantic Engine** | Sentence Transformers + FAISS | Dense vector retrieval using `paraphrase-MiniLM-L3-v2`. |
-| **Keyword Engine** | Rank-BM25 | High-recall overlap-based technical keyword search. |
-| **Inference Library** | PyTorch (CPU-Optimized) | Lightweight, high-speed on-device vectorization. |
-| **AI LLM** | Qwen-2.5 (via HF API) | 7B parameter reasoning model for technical fallbacks. |
+---
 
-## 🍣 Key Technical Features
+## 🚀 How it Works
 
-*   **Hybrid Linear Fusion**: Dynamically weights Keyword and Semantic scores to achieve **85%+ Precision@5**.
-*   **90% Intelligence Threshold**: A selective fallback logic that ensures the user either gets a "Safe" documented answer or a "Smart" AI-generated one.
-*   **Memory-Optimized Boot**: Custom multi-threaded startup sequence that binds to ports instantly while AI models load in a background worker.
-*   **Cloud-Native Stability**: Containerized with **Docker** and optimized for **Hugging Face Spaces** (16GB RAM) to eliminate OOM constraints.
+### 🎨 Frontend (React & Vite)
+The frontend is the "Command Center" of the engine. It is hosted on **Vercel** for ultra-fast edge delivery. 
+- It handles the **Neural Boot Sequence** (cinematic loading).
+- It manages user queries and communicates with the AI backend via **Axios**.
+- It visualizes search results with real-time scoring and markdown rendering for technical code snippets.
 
-## 📊 Performance Benchmarks (Hybrid vs. Single Method)
+### 🧠 Backend (FastAPI & Hugging Face)
+The backend is the "Engine Room," hosted on **Hugging Face Spaces** for massive **16GB RAM** AI inference.
+- **Data Layer**: It processes a technical Q&A dataset (`techqa.csv`) upon startup.
+- **Indexing Layer**: It builds two simultaneous indexes: **BM25** (for keyword frequency) and **FAISS** (for vector-based semantic meaning).
+- **Inference Layer**: It uses the `paraphrase-MiniLM-L3-v2` transformer to convert questions into 384-dimensional mathematical vectors.
+- **Decision Layer**: If a search score is below 90%, it automatically triggers the **Qwen-2.5-7B** AI Fallback to generate a comprehensive solution from scratch.
 
-| Method | Precision@5 | MRR | Latency (ms) |
-| :--- | :--- | :--- | :--- |
-| **BM25** | 0.62 | 0.58 | ~2ms |
-| **Semantic** | 0.78 | 0.74 | ~120ms |
-| **Hybrid (Fused)** | **0.87** | **0.83** | **~135ms** |
+---
 
-## 🛠️ Deploying Locally
+## 📦 Getting Started
 
-### 1. Requirements
-- Python 3.9+
-- Node.js 18+
-- Hugging Face API Token (Inference permissions)
+### 1. Cloning the Repository
+To get started with local development, clone the repository using Git:
+```bash
+git clone https://github.com/kurakula-prashanth/neural-search-engine.git
+cd neural-search-engine
+```
 
-### 2. Backend Installation
+### 2. How to Use the App
+1.  **Enter a Query**: Type any technical question (e.g., *"Explain Random Forest"* or *"Fix Network Error"*).
+2.  **Execute**: Press `Enter` or click **Execute** to trigger the neural matrix.
+3.  **Explore Tabs**:
+    -   **BM25**: Best for finding exact error codes or keyword matches.
+    -   **Semantic**: Best for finding conceptually similar questions.
+    -   **Hybrid**: The "Smartest" mode—uses both methods and triggers the AI LLM if confidence is low.
+    -   **Compare All**: A side-by-side benchmark of all three AI methods.
+
+---
+
+## 🛠️ Local Installation
+
+### Backend Setup
 ```bash
 cd backend
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-# Set HF_API_TOKEN in .env
+# Set your HF_API_TOKEN in .env
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-### 3. Frontend Installation
+### Frontend Setup
 ```bash
 cd frontend
 npm install
