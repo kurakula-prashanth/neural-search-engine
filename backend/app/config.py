@@ -28,7 +28,8 @@ HYBRID_ALPHA = 0.5          # 0 = pure BM25, 1 = pure semantic
 # ── LLM Fallback (Hugging Face) ──────────────────────────────────────────────
 HF_API_TOKEN = os.getenv("HF_API_TOKEN", "") # Make sure to set this in your .env file
 HF_MODEL_ID = "Qwen/Qwen2.5-7B-Instruct"
-FALLBACK_THRESHOLD = 0.85    # Require 85% confidence to stay in retrieval, otherwise use AI
+FALLBACK_THRESHOLD = 0.90    # Extreme confidence required (90%+) for local results
+
 
 
 
