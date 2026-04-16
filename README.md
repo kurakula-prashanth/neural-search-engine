@@ -1,12 +1,3 @@
----
-title: Neural Search Engine AI
-emoji: 🧠
-colorFrom: indigo
-colorTo: purple
-sdk: docker
-pinned: false
----
-
 # Neural Search Engine for Technical Q&A 🧠🔍🌌
 
 A production-grade **Semantic & Hybrid Search Engine** that bridges the gap between keyword retrieval and AI reasoning. This system uses a state-of-the-art **Hybrid Retrieval Architecture** (BM25 + FAISS) with an intelligent **Senior Architect Fallback (LLM)** for 100% technical coverage.
